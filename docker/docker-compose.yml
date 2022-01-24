@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: register-nginx
+    ports:
+      - ${APP_PORT}:80
+    volumes:
+      - ..:/var/www/vhosts/register
+      - ./nginx/register.conf:/etc/nginx/conf.d/register.conf
+    depends_on:
+      - php
+
+  php:
+    container_name: register-php
+    build: ./php
+    volumes:
+      - ..:/var/www/vhosts/register
+
+  postgres:
+    container_name: register-postgres
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432"
+
+  mailer:
+    container_name: register-mailer
+    image: schickling/mailcatcher
+    ports: [1025, 1080]
+
+volumes:
+  db-data:
+
+networks:
+  default:
+    external:
+      name: elitex
