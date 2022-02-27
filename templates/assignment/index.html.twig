@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista zadań{% endblock %}
+
+{% block body %}
+    <a href="{{ path('create-assignment') }}" class="button bg-green width-10 align-end">Utwórz zadanie</a>
+    <table>
+        <tr>
+            <th>Opis</th>
+            <th>Termin</th>
+            <th>Grupa</th>
+            <th></th>
+        </tr>
+        {% for assignment in assignments %}
+            <tr>
+                <td>{{ assignment.description }}</td>
+                <td>{{ assignment.dueDate|date("d-m-Y") }}</td>
+                <td>{{ assignment.group.symbol }}</td>
+                <td>
+                    <a href="{{ path('index-assignment-grades', {id: assignment.id}) }}">👁</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

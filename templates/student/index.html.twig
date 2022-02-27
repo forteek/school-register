@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista uczniów{% endblock %}
+
+{% block body %}
+    <a href="{{ path('create-student') }}" class="button bg-green width-10 align-end">Dodaj ucznia</a>
+    <table>
+        <tr>
+            <th>Wygląd</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Klasa</th>
+            <th></th>
+        </tr>
+        {% for student in students %}
+            <tr>
+                <td><img src="{{ asset('uploads/photos/' ~ student.photoUrl) }}" height="20px"/></td>
+                <td>{{ student.firstName }}</td>
+                <td>{{ student.lastName }}</td>
+                <td>{{ student.group.symbol }}</td>
+                <td>
+                    <a href="{{ path('destroy-student', {id: student.id}) }}">🗑</a>
+                    <a href="{{ path('index-student-grades', {id: student.id}) }}">👁️</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

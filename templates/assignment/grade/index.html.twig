@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista ocen za zadanie{% endblock %}
+
+{% block body %}
+    <a href="{{ path('create-assignment-grade', {id: assignment_id}) }}" class="button bg-green width-10 align-end">Oceń zadanie</a>
+    <table>
+        <tr>
+            <th>Uczeń</th>
+            <th>Ocena</th>
+            <th></th>
+        </tr>
+        {% for grade in grades %}
+            <tr>
+                <td>{{ grade.student.firstName ~ ' ' ~ grade.student.lastName }}</td>
+                <td>{{ grade.value }}</td>
+                <td>
+                    <a href="{{ path('update-assignment-grade', {assignmentId: assignment_id, gradeId: grade.id}) }}">✏️</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>
+        W sumie {{ grade_count }} ocen, średnia {{ average_grade }}.
+    </p>
+{% endblock %}

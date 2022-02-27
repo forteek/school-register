@@ -12,39 +12,30 @@
                     background: #eee;
                 }
                 body {
-                    font-family: arial;
-                    margin: 0;
-                }
-                a {
-                    text-decoration: none;
-                }
-                header {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    height: 10rem;
-                    background: #FDC830;  /* fallback for old browsers */
-                    background: -webkit-linear-gradient(to right, #F37335, #FDC830);  /* Chrome 10-25, Safari 5.1-6 */
-                    background: linear-gradient(to right, #F37335, #FDC830); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                }
-                nav {
-                    background: rgba(0, 0, 0, .25);
-                    display: flex;
-                }
-                nav > a {
-                    padding: 1rem;
-                    font-size: 1.1rem;
-                    color: white;
-                }
-                nav > a:hover {
-                    background-color: rgba(255, 255, 255, 0.25);
-                }
-                #content {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
                     height: 100vh;
+                    font-family: arial;
+                }
+                #security-page-wrapper {
+                    display: flex;
+                }
+                #security-form-container {
+                    background: white;
+                    display: flex;
+                    flex-direction: column;
+                    border-radius: .5rem;
+                    padding: 1rem;
+                    margin: 0 4rem;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    text-align: center;
+                    width: 20rem;
+                }
+                #security-form-container > form {
+                    display: flex;
+                    flex-direction: column;
                 }
                 input, button, .button {
                     padding: 0.5rem;
@@ -57,33 +48,37 @@
                     cursor: pointer;
                 }
                 a.button {
+                    text-decoration: none;
                     text-align: center;
                 }
                 .bg-blue {
                     background-color: #57b8ff !important;
                     color: white;
                 }
-                .bg-red {
-                    background-color: #d72638 !important;
-                    color: white;
-                }
                 .bg-green {
                     background-color: #c5d86d !important;
                     color: white;
                 }
-                .width-10 {
-                    width: 10rem;
-                }
-                .width-15 {
-                    width: 15rem;
-                }
-                .align-end {
-                    align-self: end;
+                .bg-red {
+                    background-color: #d72638 !important;
+                    color: white;
                 }
                 #brand {
                     font-size: 2rem;
-                    color: #fff;
-                    padding: 1rem;
+                    color: #f79824;
+                }
+                #security-brand-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                #security-brand-container > p {
+                    margin-top: 0;
+                }
+                #security-form-container > form > div {
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
                 }
                 .paper {
                     background: white;
@@ -97,9 +92,6 @@
                     flex-direction: column;
                     padding: 1rem;
                 }
-                th {
-                    text-align: left;
-                }
             </style>
         {% endblock %}
 
@@ -108,28 +100,13 @@
         {% endblock %}
     </head>
     <body>
-    <header>
-        <div id="brand">Dziennik</div>
-        <nav>
-            <a href="{{ path('dashboard') }}">Dashboard</a>
-            {% if app.user.hasRole('teacher') %}
-                <a href="{{ path('index-sent-messages') }}">Wiadomości</a>
-                <a href="{{ path('index-assignments') }}">Zadania</a>
-            {% else %}
-                <a href="{{ path('index-received-messages') }}">Wiadomości</a>
-                <a href="{{ path('index-students') }}">Uczniowie</a>
-            {% endif %}
-        </nav>
-    </header>
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <section class="paper bg-{{ label }}">
-                {{ message }}
-            </section>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <section class="paper bg-{{ label }}">
+                    {{ message }}
+                </section>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-    <section class="paper">
         {% block body %}{% endblock %}
-    </section>
     </body>
 </html>

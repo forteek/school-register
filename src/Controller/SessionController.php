@@ -13,7 +13,7 @@ class SessionController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->addFlash('error', $error->getMessage());
+            $this->addFlash('red', $error->getMessage());
         }
 
         $lastUsername = $authenticationUtils->getLastUsername();

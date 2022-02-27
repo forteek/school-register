@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista ocen ucznia{% endblock %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Zadanie</th>
+            <th>Ocena</th>
+        </tr>
+        {% for grade in grades %}
+            <tr>
+                <td>{{ grade.assignment.description }}</td>
+                <td>{{ grade.value }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>
+        W sumie {{ grade_count }} ocen, średnia {{ average_grade }}.
+    </p>
+{% endblock %}

@@ -1,17 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends 'security.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Rejestracja{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div id="security-page-wrapper">
+        <div id="security-brand-container">
+            <a id="brand">Dziennik</a>
+            <p>Miejsce, gdzie dzieci się uczą</p>
+        </div>
+        <div id="security-form-container">
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                {{ form_row(registrationForm.accountType) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.accountType) }}
+                <input type="hidden" name="_target_path" value="/dashboard"/>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <button type="submit" class="bg-green">Zarejestruj się</button>
+            {{ form_end(registrationForm) }}
+            <p>lub</p>
+            <a href="{{ path('register') }}" class="button bg-blue">Zaloguj się</a>
+        </div>
+    </div>
 {% endblock %}

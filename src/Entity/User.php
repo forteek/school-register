@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\UserRole;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,8 +15,8 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private readonly int $id;
+    #[ORM\Column(type: Types::INTEGER)]
+    protected int $id;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private string $email;
@@ -26,7 +27,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\Column(type: 'string')]
     private string $password;
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -54,6 +55,15 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         }
 
         return $roles;
+    }
+
+    public function hasRole($role): bool
+    {
+        if ($role instanceof UserRole) {
+            $role = $role->value;
+        }
+
+        return in_array($role, $this->roles);
     }
 
     public function setRoles(array $roles): self

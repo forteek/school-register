@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista odebranych wiadomości{% endblock %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Tytuł</th>
+            <th>Nadawca</th>
+            <th></th>
+        </tr>
+        {% for message in messages %}
+            <tr>
+                <td>{{ message.title }}</td>
+                <td>{{ message.sender.email }}</td>
+                <td>
+                    <a href="{{ path('show-message', {id: message.id}) }}">👁️</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

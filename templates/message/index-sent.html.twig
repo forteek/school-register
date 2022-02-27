@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista wysłanych wiadomości{% endblock %}
+
+{% block body %}
+    <a href="{{ path('create-message') }}" class="button bg-green width-15 align-end">Wyślij wiadomość</a>
+    <table>
+        <tr>
+            <th>Tytuł</th>
+            <th>Odbiorca</th>
+            <th>Wyświetlono</th>
+        </tr>
+        {% for message in messages %}
+            <tr>
+                <td>{{ message.title }}</td>
+                <td>{{ message.recipient.email }}</td>
+                <td>{{ message.read ? 'Tak' : 'Nie' }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

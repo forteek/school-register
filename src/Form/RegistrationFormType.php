@@ -21,13 +21,21 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Adres email',
+                ],
                 'constraints' => [
                     new Email(message: 'Email musi być prawidłowy')
                 ]
             ])
             ->add('plainPassword', PasswordType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Hasło',
+                    'autocomplete' => 'new-password',
+                ],
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank(message: 'Podaj hasło'),
                     new Length(
@@ -38,7 +46,9 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('accountType', ChoiceType::class, [
+                'label' => false,
                 'mapped' => false,
+                'expanded' => true,
                 'choices' => [
                     'Rodzic' => UserRole::PARENT,
                     'Nauczyciel' => UserRole::TEACHER,
